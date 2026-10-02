@@ -18,7 +18,7 @@ function buscarFornecedores(PDO $conexao): array{
 }    
 
 // Usada em fornecedores/inserir.php
-function inserirFornecedor(PDO $conexao, string $nome) :void {
+function inserirFornecedor(PDO $conexao, string $nome) : void {
     /* Sobre o recebimento de dados para o comando SQL
     No PDO, visando minimizar a chance de injeção de código SQL
     nocivo à partir de entradas de dados (no caso, formulário),
@@ -36,4 +36,52 @@ function inserirFornecedor(PDO $conexao, string $nome) :void {
     
     // Passo 4: executar a consulta/comando no banco
     $consulta->execute();
+}
+
+// Usada em fornecedores/editar.php
+function buscarFornecedorPorId(PDO $conexao, int $id)
+{
+    // Comando SQL
+    $sql = "SELECT * FROM fornecedores WHERE id = :id";
+   
+    // Preparação da consulta
+    $consulta = $conexao->prepare($sql);
+
+    // Atribuição do valor recebido (em $id) ao parâmetro nomeado (:id)
+    $consulta->bindValue(":id", $id);
+
+    // Execução da consulta
+    $consulta->execute();
+
+    // Retorno dos dados como array associativo
+    return $consulta->fetch();
+
+}
+
+// Usada em fornecedores/editar.php
+function atualizarFornecedor(PDO $conexao, int $id, string $nome) :void
+{
+    // Comando SQL
+    $sql = "UPDATE fornecedores SET nome = :nome WHERE id = :id";
+
+    // Preparar comando SQL
+    $consulta = $conexao->prepare($sql);
+
+    // Atribuir valores aos campos
+    $consulta->bindValue(":nome", $nome);
+    $consulta->bindValue(":id", $id);
+
+    // Executar
+    $consulta->execute();
+}
+
+// Usada em fornecedores/excluir.php
+function excluirFornecedor(PDO $conexao, int $id):void
+{
+
+   $sql = "DELETE FROM fornecedores WHERE id = :id";
+   $consulta = $conexao->prepare($sql);
+   $consulta->bindValue(":id", $id);
+   $consulta->execute();
+
 }
