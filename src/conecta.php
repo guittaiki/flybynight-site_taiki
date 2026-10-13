@@ -4,14 +4,14 @@
 $servidor = "localhost";
 $banco = "flybynight_completo";
 $usuario = "root";
-$senha = "senacpenha";
+$senha = "1234"; // Informe aqui a senha do usuário root configurada no MySQL.
 
 // Usaremos o try/catch para realizar as operações de conexão ao servidor
 try {
     // Criando um objeto a partir de classe PDO
     // PDO é uma classe de recursos para manipulação de banco de dados
     $conexao = new PDO(
-        "mysql:host=$servidor;dbname=$banco;charset=utf8mb4",
+        "mysql:host=$servidor;port=3306;dbname=$banco;charset=utf8mb4",
         $usuario,
         $senha
     );
